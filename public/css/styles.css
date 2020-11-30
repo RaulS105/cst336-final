@@ -136,5 +136,22 @@ input:focus {
   color: black;
   font-weight: bold;
   font-size: 30px;
-  
+}
+
+footer {
+  text-align: center;
+}
+
+
+/*Front Page Styling */
+.carousel-inner {
+  max-height: 45vh;
+}
+
+.fp-card {
+  text-align: center;
+}
+
+.fp-card-row {
+  margin-top: 2em;
 }

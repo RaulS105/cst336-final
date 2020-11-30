@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/justinmello32/cst336-final#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.1",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
