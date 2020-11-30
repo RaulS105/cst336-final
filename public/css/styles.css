@@ -145,7 +145,7 @@ footer {
 
 /*Front Page Styling */
 .carousel-inner {
-  max-height: 45vh;
+  max-height: 550px;
 }
 
 .fp-card {
