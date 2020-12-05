@@ -9,8 +9,8 @@ app.get("/", function(req, res){
 });
 
 //Score Page
-app.get("/scores", function(req, res){
-	res.render("scores.html");
+app.get("/schedules", function(req, res){
+	res.render("schedules.html");
 });
 
 //Ticket Page
