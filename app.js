@@ -35,7 +35,7 @@ app.get("/scores", async function(req, res){
     }
 
 	
-	res.render("scores.html",{"currentWeek":currentWeek,"scheduleArray":scheduleArray, 
+	res.render("schedules.html",{"currentWeek":currentWeek,"scheduleArray":scheduleArray, 
 	"nameArray":nameArray, "dateArray":dateArray});
 });
 
