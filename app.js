@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 app.engine('html', require('ejs').renderFile);
 app.use(express.static("public"));
+const fetch = require("node-fetch");
 
 //Routing
 app.get("/", function(req, res){
@@ -9,8 +10,33 @@ app.get("/", function(req, res){
 });
 
 //Score Page
-app.get("/scores", function(req, res){
-	res.render("scores.html");
+app.get("/scores", async function(req, res){
+	
+	let url = `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard`;
+    
+    
+    let response = await fetch(url);
+    
+    let data = await response.json();
+          
+    console.log(data);
+    
+    let scheduleArray = [];
+    let nameArray = [];
+    let dateArray = []
+    
+    let currentWeek = data.week.number;
+    
+    for( let i = 0; i < 13; i++) {
+    	scheduleArray.push(data.events[i].shortName)
+    	nameArray.push(data.events[i].name);
+     	dateArray.push(data.events[i].date);
+        // dateArray.push(data.events[i].competitions.broadcasts.market);
+    }
+
+	
+	res.render("scores.html",{"currentWeek":currentWeek,"scheduleArray":scheduleArray, 
+	"nameArray":nameArray, "dateArray":dateArray});
 });
 
 //Ticket Page
