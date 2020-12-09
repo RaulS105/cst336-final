@@ -20,6 +20,7 @@
     "@fortawesome/fontawesome-free": "^5.15.1",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "install": "^0.13.0",
     "mysql": "^2.18.1",
     "node-fetch": "^2.6.1"
   }
