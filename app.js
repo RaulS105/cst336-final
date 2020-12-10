@@ -23,7 +23,12 @@ app.get("/scores", async function(req, res){
     
     let scheduleArray = [];
     let nameArray = [];
-    let dateArray = []
+    let dateArray = [];
+    let venueArray = [];
+    let homeTeamLogo = [];
+    let awayTeamLogo = [];
+    let homeTeamRecord = []
+    let awayTeamRecord = [];
     
     let currentWeek = data.week.number;
     
@@ -31,12 +36,17 @@ app.get("/scores", async function(req, res){
     	scheduleArray.push(data.events[i].shortName)
     	nameArray.push(data.events[i].name);
      	dateArray.push(data.events[i].date);
-        // dateArray.push(data.events[i].competitions.broadcasts.market);
+     	venueArray.push(data.events[i].competitions[0].venue.fullName);
+        homeTeamLogo.push(data.events[i].competitions[0].competitors[0].team.logo);
+        awayTeamLogo.push(data.events[i].competitions[0].competitors[1].team.logo);
+        homeTeamRecord.push(data.events[i].competitions[0].competitors[0].records[0].summary);
+        awayTeamRecord.push(data.events[i].competitions[0].competitors[1].records[0].summary);
     }
 
 	
 	res.render("schedules.html",{"currentWeek":currentWeek,"scheduleArray":scheduleArray, 
-	"nameArray":nameArray, "dateArray":dateArray});
+	"nameArray":nameArray, "dateArray":dateArray, "venueArray":venueArray, "homeTeamLogo":homeTeamLogo, 
+	"awayTeamLogo":awayTeamLogo, "awayTeamRecord":awayTeamRecord, "homeTeamRecord":homeTeamRecord});
 });
 
 //Ticket Page

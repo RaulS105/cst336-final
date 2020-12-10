@@ -135,3 +135,20 @@ footer {
   
   background-image: none;
 }
+
+
+
+
+
+/* Schedule Page */
+.card-title {
+  padding-top: 8rem;
+}
+
+.record-text {
+  font-size: 20px;
+}
+
+.card {
+  margin-bottom: 2rem;
+}

@@ -6,7 +6,7 @@
         
         
     </script>
-	<h1>Current Schedule for Week <%-currentWeek %> </h1>
+	<h1 class="text-center">Current Schedule for Week <%-currentWeek %> </h1>
 	    
 	    
 	    <div class="container">
@@ -18,15 +18,27 @@
               <!--  <%-nameArray[i] %>-->
               <!--</div>-->
               <div class="card-body">
-                <h5 class="card-title"><%-nameArray[i] %></h5>
-                <p class="card-text">Date: <%-dateArray[i] %></p>
+                <div class="row">
+                  <div class="col">
+                    <img src="<%-awayTeamLogo[i] %>" class="img-fluid">
+                    <p class="text-center record-text"><%-awayTeamRecord[i]%></p>
+                  </div>
+                  <div class="col">
+                    <h5 class="card-title"><%-nameArray[i] %></h5>
+                  </div>
+                  <div class="col">
+                    <img src="<%-homeTeamLogo[i] %>" class="img-fluid">
+                    <p class="text-center record-text"><%-homeTeamRecord[i]%></p>
+                  </div>
+                </div>
+                <p class="card-text text-center">Venue: <%-venueArray[i] %></p>
               </div>
             </div>
         <% } %>
         
         </div>
 
-   
+   <input type="text" id="test">
           
          
           
