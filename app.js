@@ -117,6 +117,12 @@ app.get("/store-results", function(req, res){
     
 });
 
+//Login
+app.get("/login", function(req,res){
+   
+   res.render("login.ejs");
+});
+
 
 //Starting Server
 app.listen(process.env.PORT, process.env.IP, function(){

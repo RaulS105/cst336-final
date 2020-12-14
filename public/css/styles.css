@@ -125,6 +125,7 @@ footer {
 
 .fp-card-row {
   margin-top: 2em;
+  margin-bottom: 2em;
 }
 
 #wrapper 
@@ -156,3 +157,7 @@ footer {
   background-image: none;
 }
 
+footer {
+  background-color: #f8f9fa;
+  color: rgba(0,0,0,.5);
+}
