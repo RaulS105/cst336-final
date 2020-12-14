@@ -3,10 +3,20 @@ const express = require("express");
 const app = express();
 const pool = require("./dbPools.js");
 const fetch = require("node-fetch");
+const session = require('express-session');
+ 
 
 
 app.engine('html', require('ejs').renderFile);
 app.use(express.static("public"));
+
+app.use(session({
+    secret: "top Secret!",
+    resave: true,
+    saveUninitialized: true
+}))
+
+app.use(express.urlencoded({extended: true}));
 
 //Routing
 app.get("/", function(req, res){
@@ -55,15 +65,22 @@ app.get("/schedules", async function(req, res){
 
 //Ticket Page
 app.get("/tickets", function(req, res){
-	res.render("tickets.ejs");
+    if(req.session.authenticated) {
+	    res.render("tickets.ejs");
+    }else {
+        res.render("login.ejs", {"loginError":true, "message":"You need to login to access that page, please login"})
+    }
+    
 });
 
 
 app.get("/store", function (req, res)
 {
-    res.render("store.ejs");
-
-
+    if(req.session.authenticated) {
+        res.render("store.ejs");
+    }else {
+        res.render("login.ejs", {"loginError":true, "message":"You need to login to access that page, please login"})
+    }
 });
 
 app.get("/api/updateTicketDatabase", function (req, res)
@@ -111,10 +128,8 @@ pool.query(sql, sqlParams, function (err, rows, fields) {
 
 //Store
 app.get("/store-results", function(req, res){
-  
+    
     res.render("store-results.ejs");
-    
-    
 });
 
 //Login
@@ -122,6 +137,23 @@ app.get("/login", function(req,res){
    
    res.render("login.ejs");
 });
+
+app.post("/login", function(req,res){
+    let username = req.body.username;
+    let password = req.body.password;
+    
+    if (username == "user1" && password =="Password1"){
+        req.session.authenticated = true;
+        res.render("index.ejs", {"loginError":true, "message": "You have succesfully logged in!"});
+    } else {
+        res.render("login.ejs", {"loginError":true, "message":"Wrong Credentials entered"});
+    }
+})
+
+app.get("/logout", function(req, res){
+    req.session.destroy();
+    res.render("index.ejs");
+})
 
 
 //Starting Server

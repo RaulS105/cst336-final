@@ -157,6 +157,10 @@ footer {
   background-image: none;
 }
 
+#warning-area {
+  margin-top: 2rem;
+}
+
 footer {
   background-color: #f8f9fa;
   color: rgba(0,0,0,.5);
