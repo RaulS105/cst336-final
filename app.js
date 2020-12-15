@@ -144,12 +144,17 @@ app.get("/login", function(req,res){
 app.post("/login", function(req,res){
     let username = req.body.username;
     let password = req.body.password;
+    let checkbox = req.body.checkbox;
     
-    if (username == "user1" && password =="Password1"){
+    console.log(checkbox);
+    
+    if (checkbox == undefined) {
+        res.render("login.ejs", {"loginError":true, "message":"You did not agree to the terms before logging in."})    
+    } else if (username == "user1" && password =="Password1") {
         req.session.authenticated = true;
         res.render("index.ejs", {"loginError":true, "message": "You have succesfully logged in!"});
     } else {
-        res.render("login.ejs", {"loginError":true, "message":"Wrong Credentials entered"});
+        res.render("login.ejs", {"loginError":true, "message":"Wrong Credentials entered, please try again!"});
     }
 })
 

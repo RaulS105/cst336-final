@@ -161,6 +161,11 @@ footer {
   margin-top: 2rem;
 }
 
+.form-button {
+  margin-top: 2rem;
+  margin-bottom: 5rem;
+}
+
 footer {
   background-color: #f8f9fa;
   color: rgba(0,0,0,.5);
