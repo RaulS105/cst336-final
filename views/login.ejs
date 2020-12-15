@@ -1,7 +1,7 @@
 
 <%- include('partials/header.ejs') %>
  <body>
- <h1 class="text-center">Login</h1>
+ <h1 class="text-center">Login Page</h1>
  <div class="container">
      <div id="warning-area">
         <% if(typeof loginError != "undefined" && loginError) { %>
@@ -12,7 +12,20 @@
     </div>
  </div>
  <div class="container">
-     
+        <% if (typeof currentLogin != "undefined" && currentLogin) { %>
+        
+        <h3 class="text-center">You are currently logged in, click the button below to log out.</h2>
+        <div class="text-center">
+            <form action="/logout">
+                <button class="btn btn-danger">
+                    Logout
+                </button>
+            </form>
+        </div>
+        
+        
+        <% } else { %>
+        
          <form method="POST">
           <div class="form-group">
             <label for="username">Username</label>
@@ -33,13 +46,11 @@
           </div>
         </form>
         
-        <div class="text-center">
-            <form action="/logout">
-                <button class="btn btn-danger">
-                    Logout
-                </button>
-            </form>
-        </div>
+        <% } %>
+        
+        
+        
+        
     
 </div>
 <%- include('partials/footer.ejs') %>

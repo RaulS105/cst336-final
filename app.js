@@ -134,8 +134,11 @@ app.get("/store-results", function(req, res){
 
 //Login
 app.get("/login", function(req,res){
-   
-   res.render("login.ejs");
+   if(req.session.authenticated) {
+        res.render("login.ejs", {"currentLogin":true});
+   } else {
+        res.render("login.ejs",{"currentLogin":false});
+   }
 });
 
 app.post("/login", function(req,res){
