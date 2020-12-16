@@ -5,8 +5,7 @@ const pool = require("./dbPools.js");
 const fetch = require("node-fetch");
 const session = require('express-session');
 const bcrypt = require("bcrypt");
- 
-
+const mysql = require('mysql');
 
 app.engine('html', require('ejs').renderFile);
 app.use(express.static("public"));
@@ -17,7 +16,20 @@ app.use(session({
     saveUninitialized: true
 }))
 
+function createDBConnection() {
+    var conn = mysql.createPool({
+        connectionLimit: 10,
+        host: "de1tmi3t63foh7fa.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+        user: "svwvjtxw27jdshva",
+        password: "fdwslyjayg4pu6oo",
+        database: "b5u5zeiyntiu2as3"
+    });
+    return conn;
+};
+
 app.use(express.urlencoded({extended: true}));
+
+
 
 //Routing
 app.get("/", function(req, res){
@@ -75,12 +87,12 @@ app.get("/tickets", function(req, res){
 });
 
 
-app.get("/store", function (req, res)
+app.get("/store", function (req, res, next)
 {
     if(req.session.authenticated) {
         res.render("store.ejs");
     }else {
-        res.render("login.ejs", {"loginError":true, "message":"You need to login to access that page, please login"})
+        res.render("login.ejs", {"loginError":true, "message":"You need to login to access that page, please login"});
     }
 });
 
@@ -147,7 +159,13 @@ app.post("/login", async function(req,res){
     let password = req.body.password;
     let checkbox = req.body.checkbox;
     
-    let hashedPwd = "$2a$10$7vRjnIwejm8KezuicO5Eje5Ckbp6ost.MDBiN0dozzMdY4oxBVXG2";
+    let result = await checkUsername(username);
+    
+    let hashedPwd = "";
+    if (result.length > 0){
+        hashedPwd = result[0].pass;
+    }
+    
     let passwordMatch = await checkPassword(password,hashedPwd);
 
     if (checkbox == undefined) {
@@ -165,7 +183,21 @@ app.get("/logout", function(req, res){
     res.render("index.ejs");
 })
 
+
+function checkUsername(username) {
+    let sql = "SELECT * FROM users WHERE username = ?";
+    return new Promise(function(resolve, reject) {
+        let conn = createDBConnection();
+        conn.query(sql, [username], function(err, rows, fields) {
+            if (err) throw err;
+            console.log("Rows found: " + rows.length);
+            resolve(rows);
+        })
+    })
+}
+
 function checkPassword(password, hashedValue) {
+    
     return new Promise( function(resolve,reject){
         bcrypt.compare(password, hashedValue, function(err,result){
             console.log("Result: " + result);
