@@ -4,6 +4,7 @@ const app = express();
 const pool = require("./dbPools.js");
 const fetch = require("node-fetch");
 const session = require('express-session');
+const bcrypt = require("bcrypt");
  
 
 
@@ -141,16 +142,17 @@ app.get("/login", function(req,res){
    }
 });
 
-app.post("/login", function(req,res){
+app.post("/login", async function(req,res){
     let username = req.body.username;
     let password = req.body.password;
     let checkbox = req.body.checkbox;
     
-    console.log(checkbox);
-    
+    let hashedPwd = "$2a$10$7vRjnIwejm8KezuicO5Eje5Ckbp6ost.MDBiN0dozzMdY4oxBVXG2";
+    let passwordMatch = await checkPassword(password,hashedPwd);
+
     if (checkbox == undefined) {
         res.render("login.ejs", {"loginError":true, "message":"You did not agree to the terms before logging in."})    
-    } else if (username == "user1" && password =="Password1") {
+    } else if (username == "user1" && passwordMatch) {
         req.session.authenticated = true;
         res.render("index.ejs", {"loginError":true, "message": "You have succesfully logged in!"});
     } else {
@@ -162,6 +164,15 @@ app.get("/logout", function(req, res){
     req.session.destroy();
     res.render("index.ejs");
 })
+
+function checkPassword(password, hashedValue) {
+    return new Promise( function(resolve,reject){
+        bcrypt.compare(password, hashedValue, function(err,result){
+            console.log("Result: " + result);
+            resolve(result);
+        })
+    })
+}
 
 
 //Starting Server
