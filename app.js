@@ -36,6 +36,12 @@ app.get("/", function(req, res){
 	res.render("index.ejs");
 });
 
+//contact page
+app.get("/contact", async function(req, res)
+{
+    res.render("contact.html");
+});
+
 //Score Page
 app.get("/schedules", async function(req, res){
 
@@ -113,7 +119,8 @@ pool.query(sql, sqlParams, function (err, rows, fields) {
     if (err) throw err;
     console.log(rows);
     res.send(rows.affectedRows.toString());
-  });
+    
+});
 
 });
 
@@ -183,7 +190,26 @@ app.get("/logout", function(req, res){
     res.render("index.ejs");
 })
 
+app.get("/api/updateContact", function (req, res)
+{
+    let sql;
 
+    let sqlParams;
+    
+    switch (req.query.action) {
+    case "add": sql = "INSERT INTO contact (firstname, lastname,country,subject) VALUES (?,?,?,?)";
+                sqlParams = [req.query.firstname, req.query.lastname, req.query.country, req.query.subject];
+                break;
+    }
+
+  
+pool.query(sql, sqlParams, function (err, rows, fields) {
+    if (err) throw err;
+    console.log(rows);
+    res.send(rows.affectedRows.toString());
+  });
+
+});
 function checkUsername(username) {
     let sql = "SELECT * FROM users WHERE username = ?";
     return new Promise(function(resolve, reject) {

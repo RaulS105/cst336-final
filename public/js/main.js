@@ -34,6 +34,25 @@ $("#myButton").on("click", async function()
     
 });
 
+$("#submit").on("click", async function()
+{   
+    
+    let fname   = $("#fname").val();
+    let lname   = $("#lname").val();
+    let country = $("#country").val();
+    let subject = $("#subject").val();
+    
+    updateContact("add", fname, lname, country, subject);
+    
+    
+});
+
+async function updateContact(action,fname,lname,country,subject)
+{
+    let url = `/api/updateContact?action=${action}&firstname=${fname}&lastname=${lname}&country=${country}&subject=${subject}`
+    await fetch(url);
+}
+
 async function updateDatabase(action,total,value)
 {
        let url = `/api/updateDatabase?action=${action}&total=${newPrice}&value=${value}`
