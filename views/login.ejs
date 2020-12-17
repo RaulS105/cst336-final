@@ -14,14 +14,15 @@
  <div class="container">
         <% if (typeof currentLogin != "undefined" && currentLogin) { %>
         
-        <h3 class="text-center">You are currently logged in, click the button below to log out.</h2>
         
+        <h4>Please see below for current account information, use the input below to change your favorite team. </h4>
         <table class="table">
       <thead>
         <tr>
           <th scope="col">User ID</th>
           <th scope="col">Username</th>
           <th scope="col">Team</th>
+          <th scope="col">Update Team</th>
         </tr>
       </thead>
       <tbody>
@@ -29,13 +30,14 @@
         <tr>
         <td><%= row.userId  %></td>
         <td><%= row.username %></td>
-        <td><form action="/action_page.php"><input type="text" id="team" name="team" placeholder="<%= row.team  %>"><br><br></td>
-        
+        <td><form method="POST" action="/updateTeam"><input type="text" id="team" name="teamName" placeholder="<%= row.team  %>"><br><br></td>
+        <td><input type="submit" class="btn btn-primary" value="Submit"></form></td>
         </tr>
       
         <% });%>
         </tbody>
         </table>  
+        <h4 class="text-center">You are currently logged in, click the button below to log out.</h4>
         <div class="text-center">
             <form action="/logout">
                 <button class="btn btn-danger form-button">

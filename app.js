@@ -198,6 +198,19 @@ app.get("/logout", function(req, res){
     res.render("index.ejs");
 })
 
+app.post("/updateTeam", function(req, res){
+    
+    let teamName = req.body.teamName;
+    console.log(teamName);
+    var sql = "UPDATE users SET team = ? WHERE userId = 1";
+    let conn = createDBConnection();
+    conn.query(sql, [teamName], function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+  });
+  res.render("index.ejs", {"loginError":true, "message": "You have updated your favorite team to " + teamName});
+});
+
 app.get("/api/updateContact", function (req, res)
 {
     let sql;
