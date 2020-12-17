@@ -154,11 +154,19 @@ app.get("/store-results", function(req, res){
 
 //Login
 app.get("/login", function(req,res){
-   if(req.session.authenticated) {
-        res.render("login.ejs", {"currentLogin":true});
+    
+    let sql = "SELECT * FROM users";
+	pool.query(sql, function (err, rows, fields) {
+        if (err) throw err;
+	
+    
+    if(req.session.authenticated) {
+   //Get Login Table
+        res.render("login.ejs", {"currentLogin":true, "rows":rows});
    } else {
-        res.render("login.ejs",{"currentLogin":false});
+        res.render("login.ejs",{"currentLogin":false, "rows":rows});
    }
+	});
 });
 
 app.post("/login", async function(req,res){
